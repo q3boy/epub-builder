@@ -1,24 +1,29 @@
 archiver = require 'archiver'
 mime = require 'mimetype'
 fs = require 'fs'
+path = require 'path'
 
 class Zip
   constructor : (@file) ->
+    @dir = ''
     @zip = archiver.create 'zip', store: true
-    @zip.pipe fs.createWriteStream @file+'.epub'
+    @stream = fs.createWriteStream @file+'.epub'
+    @zip.pipe @stream
 
   chdir : (@dir) ->
-    @zip.append null, name: "#{@dir}/"
+    @zip.append null, name: "#{path.normalize @dir}/"
+    @
   mkdir : (dir) ->
-    @zip.append null, name: "#{@dir}/#{dir}/"
+    @zip.append null, name: "#{path.join @dir, dir}/"
     @
   copy  : (from, to) ->
-    @zip.append fs.readFileSync(from), {name: "#{@dir}/#{to}", store: 0 is mime.lookup(to).indexOf 'image/'}
+    @zip.append fs.readFileSync(from), {name: "#{path.join @dir, to}", store: 0 is mime.lookup(to).indexOf 'image/'}
     @
   write : (file, content) ->
-    @zip.append content, {name: "#{@dir}/#{file}", store: 0 is mime.lookup(file).indexOf 'image/'}
+    @zip.append content, {name: "#{path.join @dir, file}", store: 0 is mime.lookup(file).indexOf 'image/'}
     @
-  save : ->
+  save : (cb)->
+    @stream.on 'close', cb
     @zip.finalize()
     @
 

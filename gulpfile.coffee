@@ -5,6 +5,7 @@ util  = require 'gulp-util'
 noti  = require 'mocha-notifier-reporter'
 istan = require 'gulp-coffee-istanbul'
 
+# spec = ['spec/**/spec-*.coffee']
 spec = ['spec/**/spec-*.coffee']
 cs = ['lib/**/*.coffee']
 js = ["lib/**/*.js", 'index.js']
@@ -13,9 +14,9 @@ wfiles = js.concat(cs).concat(spec)
 
 
 gulp.task 'test', (cb)->
-  gulp.src(['tests/*.coffee'], read: false)
+  gulp.src(spec, read: false)
   .pipe(mocha reporter: noti.decorate 'list')
-  .on('error', util.log)
+  # .on('error', util.log)
 
 gulp.task 'test-cov', (cb)->
   gulp.src(js.concat cs)
