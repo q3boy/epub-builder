@@ -1,0 +1,20 @@
+//- doctype html
+//- html(lang="zh-cmn-Hans")
+doctype xml
+doctype 1.1
+html(xmlns="http://www.w3.org/1999/xhtml", xml:lang="zh-Hans")
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="Content-Type", content="application/xhtml+xml; charset=utf-8")
+
+    title= volume.title + ' - ' + title
+    style p{text-indent: 2em;}
+  body
+    h1= volume.title
+    h2= title
+    each line in content
+      p= line
+    if img.length
+      p: each image in img
+        img(src="#{image.file}")
+
