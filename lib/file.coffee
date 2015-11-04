@@ -24,3 +24,4 @@ class File
     @
 
 module.exports = (file)-> new File file
+module.exports.File = File

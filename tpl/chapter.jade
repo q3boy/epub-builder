@@ -1,5 +1,13 @@
 //- doctype html
 //- html(lang="zh-cmn-Hans")
+//- STRIP BELOW
+- if (typeof volume === 'undefined') {
+- title = "__CHAPTER_TITLE";
+- volume = {title : "__VOLUME_TITLE"};
+- content = ["__LINE1", "__LINE2", "__LINE3"];
+- img = [{file:'__IMG.jpg'}];
+- }
+//- STRIP ABOVE
 doctype xml
 doctype 1.1
 html(xmlns="http://www.w3.org/1999/xhtml", xml:lang="zh-Hans")
@@ -8,7 +16,7 @@ html(xmlns="http://www.w3.org/1999/xhtml", xml:lang="zh-Hans")
     meta(http-equiv="Content-Type", content="application/xhtml+xml; charset=utf-8")
 
     title= volume.title + ' - ' + title
-    style p{text-indent: 2em;}
+    link(href="chapter.css", media="all", rel="stylesheet")
   body
     h1= volume.title
     h2= title
@@ -17,4 +25,3 @@ html(xmlns="http://www.w3.org/1999/xhtml", xml:lang="zh-Hans")
     if img.length
       p: each image in img
         img(src="#{image.file}")
-

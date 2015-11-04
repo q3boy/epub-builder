@@ -1,4 +1,4 @@
-{chapter: tpl} = require './util'
+{chapter: tpl, req} = require './util'
 path = require 'path'
 mime = require 'mimetype'
 jade = require 'jade'
@@ -37,9 +37,10 @@ class Chapter
     fhandle.write @file, html
     return cb @ if @img.length is 0
     # save all imgs
+    num = @img.length
     for {url, file} in @img
       do (url, file) =>
-        req img.url, (data)=>
+        req url, (data)=>
           fhandle.write file, data
           return cb(@) if 0 is --num
     @

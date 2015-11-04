@@ -1,0 +1,18 @@
+doctype xml
+ncx(xmlns="http://www.daisy.org/z3986/2005/ncx/", version="2005-1", xml:lang="zh-Hans")
+  head
+    meta(content=book.uuid, name="dtb:uid")
+    meta(content="3", name="dtb:depth")
+    meta(content="0", name="dtb:totalPageCount")
+    meta(content="0", name="dtb:maxPageNumber")
+  docTitle: text= book.title
+  navMap
+    - num=1
+    each vol in book.vol
+      navPoint(id=vol.id, playOrder=num++)
+        navLabel: text=vol.title
+        content(src=vol.chap[0].file)
+        each chap in vol.chap
+          navPoint(id=chap.id, playOrder=num++)
+            navLabel: text=chap.title
+            content(src=chap.file)

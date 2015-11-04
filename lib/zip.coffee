@@ -17,14 +17,18 @@ class Zip
     @zip.append null, name: "#{path.join @dir, dir}/"
     @
   copy  : (from, to) ->
-    @zip.append fs.readFileSync(from), {name: "#{path.join @dir, to}", store: 0 is mime.lookup(to).indexOf 'image/'}
-    @
+    @write to, fs.readFileSync from
+
   write : (file, content) ->
-    @zip.append content, {name: "#{path.join @dir, file}", store: 0 is mime.lookup(file).indexOf 'image/'}
+    @zip.append content,
+      name: path.join @dir, file
+      store: 0 is mime.lookup(file).indexOf 'image/'
     @
   save : (cb)->
     @stream.on 'close', cb
+
     @zip.finalize()
     @
 
 module.exports = (file)-> new Zip file
+module.exports.Zip = Zip

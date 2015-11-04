@@ -1,0 +1,25 @@
+doctype xml
+package(xmlns="http://www.idpf.org/2007/opf", unique-identifier="uuid_id", version="2.0")
+  metadata(xmlns:dc="http://purl.org/dc/elements/1.1/", xmlns:dcterms="http://purl.org/dc/terms/", xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance", xmlns:opf="http://www.idpf.org/2007/opf")
+    dc:title= book.title
+    dc:creator= book.author
+    dc:language(xsi:type="dcterms:RFC3066") zh-Hans
+    if book.cover
+      meta(name="cover", content="cover")
+  manifest
+    item(href="toc.ncx", id="ncx", media-type="application/x-dtbncx+xml")
+    item(href="start.html", id="start", media-type="application/xhtml+xml")
+    if book.cover
+      item(href=book.cover, id="cover", media-type=book.coverType)
+    each chap in book.chapQueue
+      item(href=chap.file, id=chap.id, media-type="application/xhtml+xml")
+    each img in book.imgQueue
+      item(href=img.file, id=img.file, media-type=img.type)
+  spine(toc="ncx")
+    itemref(idref="start")
+    each chap in book.chapQueue
+      itemref(idref=chap.id)
+  guide
+    reference(href=book.file, type="Title", title="Title")
+
+

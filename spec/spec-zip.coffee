@@ -1,5 +1,5 @@
 e = require 'expect.js'
-zip = require '../lib/zip'
+{Zip} = require '../lib/zip'
 unzip = require 'unzip'
 fs = require 'fs'
 
@@ -15,7 +15,7 @@ describe 'zip', ->
     fs.rmdirSync tmpDir
   )
   it 'empty file', (done)->
-    zip("#{tmpDir}/empty").save ->
+    new Zip("#{tmpDir}/empty").save ->
       num = 0
       fs.createReadStream(tmpDir+'/empty.epub')
       .pipe unzip.Parse()
@@ -30,7 +30,7 @@ describe 'zip', ->
       'F a.txt', 'F aaa/a.txt', 'F aaa/c.txt'
       'F b.txt', 'F bbb/ccc/a.txt', 'F bbb/ccc/b.txt'
     ]
-    zip("#{tmpDir}/mixed").mkdir('aaa').mkdir('bbb/ccc')
+    new Zip("#{tmpDir}/mixed").mkdir('aaa').mkdir('bbb/ccc')
     .write('a.txt', 'a.txt').write('aaa/a.txt', 'a.txt')
     .copy("#{__dirname}/zipfiles/b.txt", 'b.txt').copy("#{__dirname}/zipfiles/c.txt", 'aaa/c.txt')
     .chdir('bbb/ccc').write('a.txt', 'a.txt').copy("#{__dirname}/zipfiles/b.txt", 'b.txt')

@@ -1,0 +1,14 @@
+doctype 1.1
+html(xmlns="http://www.w3.org/1999/xhtml", xml:lang="zh-Hans")
+  head
+    meta(charset="UTF-8")
+    meta(http-equiv="Content-Type", content="application/xhtml+xml; charset=utf-8")
+    title= book.title
+  body
+    h1= book.title
+    p= book.author
+    each vol in book.vol
+      h3(id=vol.id)= vol.title
+      each chap in vol.chap
+        h4: a(id=chap.id, href=chap.file)= chap.title
+      hr
